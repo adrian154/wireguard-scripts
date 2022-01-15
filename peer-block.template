@@ -1,0 +1,5 @@
+
+# Peer: ${PEER_NAME}
+[Peer]
+PublicKey = ${PEER_PUBKEY}
+AllowedIPs = ${PEER_IP}/32
