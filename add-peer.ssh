@@ -1,0 +1,25 @@
+# input validation
+if [ $# -ne 2 ]
+then
+        echo "Too few arguments!"
+        echo "Usage: <peer name> <IP>"
+        exit 1
+fi
+
+# generate keys
+export PEER_NAME=$1
+export PEER_IP=$2
+export PEER_PRIVKEY=$(wg genkey)
+export PEER_PUBKEY=$(echo $PEER_PRIVKEY | wg pubkey)
+
+# generate configuration
+envsubst < user-config.template > configs/$PEER_NAME.conf
+
+# append peer to config
+envsubst < peer-block.template >> wg0.conf
+
+# get rid of keys
+unset PEER_NAME
+unset PEER_IP
+unset PRIVKEY
+unset PUBKEY
